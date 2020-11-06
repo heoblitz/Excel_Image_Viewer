@@ -40,16 +40,14 @@
             function parseUrl(rows) {
                 console.log(rows)
                 rows.forEach ((row) =>
-                    appendImageComponent(row["제목"])
+                    appendImageComponent(row["images"])
                 );
             }
 
             function appendImageComponent(url) {
                 let elem = document.createElement("img");
                 elem.setAttribute("src", url);
-                elem.setAttribute("height", "100");
-                elem.setAttribute("width", "100");
-
+                elem.setAttribute("style", "border: 1px; border-style: solid; border-color: black; height: auto; width: auto; max-width: 500px; max-height: 500px");
                 root.appendChild(elem);
             }
         </script>
