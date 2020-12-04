@@ -23,12 +23,21 @@ function readExcel() {
 function parseUrl(rows) {
     console.log(rows);
 
-    rows.forEach (function(row) {
-        img = prepareImageCell(row["images"])
-        text1 = prepareTextCell(row["texts"])
-        text2 = prepareTextCell(row["texts2"])
+    rows.every (function(row) {
+        let imagesData = row["images"];
+        let textsData = row["texts"];
+        let texts2Data = row["texts2"];
+
+        if (isTextNull(imagesData) || isTextNull(textsData) || isTextNull(texts2Data)) {
+            alertWarning();
+            return false;
+        }
+
+        img = prepareImageCell(imagesData);
+        text1 = prepareTextCell(textsData);
+        text2 = prepareTextCell(texts2Data);
         
-        table.appendChild(prepareTableRow([img, text1, text2]))
+        table.appendChild(prepareTableRow([img, text1, text2]));
     })
 }
 
@@ -36,7 +45,7 @@ function prepareTableRow(elems) {
     let tableRow = document.createElement("div");
     tableRow.setAttribute("class", "item-table-row");
 
-    elems.forEach ((elem) =>
+    elems.forEach((elem) =>
         tableRow.appendChild(elem)
     )
 
@@ -65,4 +74,16 @@ function prepareTextCell(text) {
     tableCell.appendChild(textElem);
 
     return tableCell;
+}
+
+function isTextNull(cellData) {
+    if(typeof cellData == "undefined" || cellData == null || cellData == "") {
+        return true
+    }
+
+    return false
+}
+
+function alertWarning() {
+    alert("엑셀 파일을 확인해주세요.")
 }
