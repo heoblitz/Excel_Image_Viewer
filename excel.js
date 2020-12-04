@@ -38,6 +38,7 @@ function parseUrl(rows) {
         text2 = prepareTextCell(texts2Data);
         
         table.appendChild(prepareTableRow([img, text1, text2]));
+        return true;
     })
 }
 
