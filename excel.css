@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+html, body, div, h1, input {
+    margin: 0;
+    padding: 0;
+    font-family: "font-family: 'Nanum Gothic'";
+}
+
+img {
+    vertical-align: top;
+}
+
+.header {
+    height: 50px;
+    width: 100%;
+    background-color: #364146;
+}
+
+.header .document-header {
+    line-height: 55px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.header .document-header .document-title {
+    color:white;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.container .container-header {
+    width: 430px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.container #root div {
+    border: 1px solid #bcbcbc;
+}
+
+.container .item-table {
+    display: table;
+    width: 100%;
+}
+
+.container .item-table .item-table-row {
+    display: table-row;
+}
+
+.container .item-table .item-table-row .item-cell {
+    display: table-cell;
+    width: 33%;
+    text-align: center;
+    vertical-align: middle;
+} 
+
+.container .item-table .item-table-row .item-image {
+    border: 1px; border-style: solid; border-color: black;
+    max-width: 500px; max-height: 500px;
+}
