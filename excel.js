@@ -1,5 +1,6 @@
 document.getElementById("input-excel-file").addEventListener("change", readExcel, false)
 let root = document.getElementById("root");
+let table = document.getElementsByClassName("item-table")[0];
 
 function readExcel() {
     let input = event.target;
@@ -20,15 +21,48 @@ function readExcel() {
 }
 
 function parseUrl(rows) {
-    console.log(rows)
-    rows.forEach ((row) =>
-        appendImageComponent(row["images"])
-    );
+    console.log(rows);
+
+    rows.forEach (function(row) {
+        img = prepareImageCell(row["images"])
+        text1 = prepareTextCell(row["texts"])
+        text2 = prepareTextCell(row["texts2"])
+        
+        table.appendChild(prepareTableRow([img, text1, text2]))
+    })
 }
 
-function appendImageComponent(url) {
-    let elem = document.createElement("img");
-    elem.setAttribute("src", url);
-    elem.setAttribute("style", "border: 1px; border-style: solid; border-color: black; height: auto; width: auto; max-width: 500px; max-height: 500px");
-    root.appendChild(elem);
+function prepareTableRow(elems) {
+    let tableRow = document.createElement("div");
+    tableRow.setAttribute("class", "item-table-row");
+
+    elems.forEach ((elem) =>
+        tableRow.appendChild(elem)
+    )
+
+    return tableRow;
+}
+
+function prepareImageCell(url) {
+    let imgElem = document.createElement("img");
+    imgElem.setAttribute("src", url);
+    imgElem.setAttribute("class", "item-image");
+ 
+    let tableCell = document.createElement("div");
+    tableCell.className = "item-cell";
+    tableCell.appendChild(imgElem);
+
+    return tableCell;
+}
+
+function prepareTextCell(text) {
+    let textElem = document.createElement("p");
+    textElem.setAttribute("class", "item-text");
+    textElem.innerHTML = text
+
+    let tableCell = document.createElement("div");
+    tableCell.className = "item-cell";
+    tableCell.appendChild(textElem);
+
+    return tableCell;
 }
