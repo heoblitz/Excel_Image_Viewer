@@ -26,6 +26,11 @@ img {
     color:white;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .container .container-header {
     width: 430px;
     margin: 0 auto;

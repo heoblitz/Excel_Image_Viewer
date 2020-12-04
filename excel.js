@@ -1,5 +1,6 @@
 document.getElementById("input-excel-file").addEventListener("change", readExcel, false)
 let root = document.getElementById("root");
+let table = document.getElementsByClassName("item-table")[0];
 
 function readExcel() {
     let input = event.target;
@@ -20,15 +21,70 @@ function readExcel() {
 }
 
 function parseUrl(rows) {
-    console.log(rows)
-    rows.forEach ((row) =>
-        appendImageComponent(row["images"])
-    );
+    console.log(rows);
+
+    rows.every (function(row) {
+        let imagesData = row["images"];
+        let textsData = row["texts"];
+        let texts2Data = row["texts2"];
+
+        if (isTextNull(imagesData) || isTextNull(textsData) || isTextNull(texts2Data)) {
+            alertWarning();
+            return false;
+        }
+
+        img = prepareImageCell(imagesData);
+        text1 = prepareTextCell(textsData);
+        text2 = prepareTextCell(texts2Data);
+        
+        table.appendChild(prepareTableRow([img, text1, text2]));
+        return true;
+    })
 }
 
-function appendImageComponent(url) {
-    let elem = document.createElement("img");
-    elem.setAttribute("src", url);
-    elem.setAttribute("style", "border: 1px; border-style: solid; border-color: black; height: auto; width: auto; max-width: 500px; max-height: 500px");
-    root.appendChild(elem);
+function prepareTableRow(elems) {
+    let tableRow = document.createElement("div");
+    tableRow.setAttribute("class", "item-table-row");
+
+    elems.forEach((elem) =>
+        tableRow.appendChild(elem)
+    )
+
+    return tableRow;
+}
+
+function prepareImageCell(url) {
+    let imgElem = document.createElement("img");
+    imgElem.setAttribute("src", url);
+    imgElem.setAttribute("class", "item-image");
+ 
+    let tableCell = document.createElement("div");
+    tableCell.className = "item-cell";
+    tableCell.appendChild(imgElem);
+
+    return tableCell;
+}
+
+function prepareTextCell(text) {
+    let textElem = document.createElement("p");
+    textElem.setAttribute("class", "item-text");
+    textElem.innerHTML = text
+
+    let tableCell = document.createElement("div");
+    tableCell.className = "item-cell";
+    tableCell.appendChild(textElem);
+
+    return tableCell;
+}
+
+function isTextNull(cellData) {
+    if(typeof cellData == "undefined" || cellData == null || cellData == "") {
+        return true
+    }
+
+    return false
+}
+
+function alertWarning() {
+    alert("엑셀 파일을 확인해주세요.")
 }
